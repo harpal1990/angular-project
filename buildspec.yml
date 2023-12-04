@@ -1,32 +1,21 @@
 version: 0.2
-env:
-  variables:
-    ECR_REPO_NAME: my-angular-app
-  parameter-store:
-    DOCKERHUB_TOKEN: /dockerhub/token
-    DOCKERHUB_USER: /dockerhub/user
+
 phases:
   pre_build:
     commands:
-      # Docker Hub login
-      - echo ${DOCKERHUB_TOKEN} | docker login -u ${DOCKERHUB_USER} --password-stdin 
-      
-      # ECR login
-      - ECR_MAIN_URI="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
-      - aws ecr get-login-password --region ${AWS_REGION} | docker login -u AWS --password-stdin ${ECR_MAIN_URI}
-
-      - ECR_IMAGE_URI="${ECR_MAIN_URI}/${ECR_REPO_NAME}:latest"
+      - echo Logging in to Amazon ECR...
+      - ECR_LOGIN=$(aws ecr get-login-password --region $AWS_DEFAULT_REGION)
+      - echo $ECR_LOGIN | docker login -u AWS --password-stdin 997753278599.dkr.ecr.ap-south-1.amazonaws.com
+      - REPOSITORY_URI=997753278599.dkr.ecr.ap-south-1.amazonaws.com/reactrepo
+      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
   build:
     commands:
-      - docker build -t my-angular-app:latest .
+      - echo Build started on `date`
+      - echo Building the Docker image...
+      - docker build -t $REPOSITORY_URI:latest .
+      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
   post_build:
     commands:
-      - docker tag my-angular-app:latest ${ECR_IMAGE_URI}
-      - docker push ${ECR_IMAGE_URI}
-
-      # Generate image definitions file for ECS
-      - printf '[{"name":"angular-app","imageUri":"%s"}]' ${ECR_IMAGE_URI} > imagedefinitions.json
-
-artifacts:
-  files:
-    - imagedefinitions.json
+      - echo Pushing the Docker image to Amazon ECR...
+      - docker push $REPOSITORY_URI
