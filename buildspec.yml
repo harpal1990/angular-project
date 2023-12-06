@@ -6,7 +6,7 @@ phases:
       - echo Logging in to Amazon ECR...
       - ECR_LOGIN=$(aws ecr get-login-password --region $AWS_DEFAULT_REGION)
       - echo $ECR_LOGIN | docker login -u AWS --password-stdin 997753278599.dkr.ecr.ap-south-1.amazonaws.com
-      - REPOSITORY_URI=997753278599.dkr.ecr.ap-south-1.amazonaws.com/reactrepo
+      - REPOSITORY_URI=997753278599.dkr.ecr.ap-south-1.amazonaws.com/reactrepository
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
   build:
