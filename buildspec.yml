@@ -20,7 +20,7 @@ phases:
       - echo Pushing the Docker image to Amazon ECR...
       - docker push $REPOSITORY_URI
   # Generate image definition for ECS
-      - printf '[{"name":"angular","imageUri":"%s"}]' 997753278599.dkr.ecr.ap-south-1.amazonaws.com/reactrepo > imagedefinitions.json
+      - printf '[{"name":"angular","imageUri":"%s"}]' 997753278599.dkr.ecr.ap-south-1.amazonaws.com/reactrepository > imagedefinitions.json
 
 artifacts:
   files:
