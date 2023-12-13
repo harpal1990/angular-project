@@ -3,7 +3,7 @@ Resources:
  - TargetService:
      Type: AWS::ECS::Service
      Properties:
-       TaskDefinition: "arn:aws:ecs:ap-south-1:997753278599:task-definition/Techserverglobal-TaskDefinition:1"
+       TaskDefinition: "arn:aws:ecs:ap-south-1:997753278599:task-definition/Techserverglobal-TaskDefinition:2"
        LoadBalancerInfo:
          ContainerName: "angular"
          ContainerPort: 80
