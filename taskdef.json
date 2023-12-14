@@ -1,2 +1,2 @@
 "image": "997753278599.dkr.ecr.ap-south-1.amazonaws.com/reactrepository:latest"
-"taskDefinitionArn": "arn:aws:ecs:ap-south-1:997753278599:task-definition/Techserverglobal-TaskDefinition:2"
+"taskDefinitionArn": "arn:aws:ecs:ap-south-1:997753278599:task-definition/Taskdefinition-Techserverglobal-angular:1"
