@@ -21,10 +21,19 @@ phases:
       - docker push $REPOSITORY_URI
   # Generate image definition for ECS
       - printf '[{"name":"angular","imageUri":"997753278599.dkr.ecr.ap-south-1.amazonaws.com/reactrepository"}]'  > imagedefinitions.json
+      - printf '{"ImageURI":"%s"}' 997753278599.dkr.ecr.ap-south-1.amazonaws.com/reactrepository:latest > imageDetail.json
 
 artifacts:
   files:
     - imagedefinitions.json
     - taskdef.json
     - appspec.yaml
-
+    - 'image*.json'
+  secondary-artifacts:
+    DefinitionArtifact:
+      files:
+        - appspec.yaml
+        - taskdef.json
+    ImageArtifact:
+      files:
+        - imageDetail.json
