@@ -25,6 +25,8 @@ phases:
 
 artifacts:
   files:
+    - 'dist/angular-project**/*'
+    - appspec.yml
     - imagedefinitions.json
     - taskdef.json
     - appspec.yaml
