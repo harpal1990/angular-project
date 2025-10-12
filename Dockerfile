@@ -18,7 +18,7 @@ RUN npm install && ng build --prod
 
 
 # STAGE 2: Build the final deployable image
-FROM nginx:1.21
+FROM nginx:1.29.2
 
 # Allow the HTTP port needed by the Nginx server for connections
 EXPOSE 80
